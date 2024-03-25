@@ -5,9 +5,29 @@
 </head>
 <body>
     <h1>Image Uploader</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+   
+
     <form  method="post" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*">
+        <input type="file" name="image" >
         <input type="submit" value="Upload">
     </form>
+
+    <h2>Images</h2>
+    <ul>
+        <h3 class="">Original image </h3>
+        <img src="static/images/original_.jpg" alt="" class="">
+        <h3 class="">Predictied image </h3> 
+        <img src="static/images/prediction.jpg" alt="" class="">
 </body>
+
 </html>
