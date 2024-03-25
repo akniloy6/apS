@@ -1,11 +1,11 @@
 import os
 import torch
-from flask import Flask, send_from_directory, jsonify
+from flask import Flask, send_from_directory, jsonify,request,flash,redirect,render_template
 from runpy import run_path
 from skimage import img_as_ubyte
 import cv2
 import torch.nn.functional as F
-
+import urllib.request
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
@@ -37,12 +37,14 @@ config = {
     'model_name': 'MIRNet_v2',
     'task': 'lowlight_enhancement',
     'input_dir': 'demo/sample_images/'+task+'/degraded',
-    'output_dir': 'demo/sample_images/'+task+'/restored',
-    'img_multiple_of': 4
+    'output_dir': 'static/images',
+    'img_multiple_of': 4,
+
 
 }
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+
+
 
 input_dir = config['input_dir']
 out_dir = config['output_dir']
@@ -54,15 +56,16 @@ model.cuda()
 checkpoint = torch.load(weights)
 model.load_state_dict(checkpoint['params'])
 model.eval()
-
-
-
 img_multiple_of = config['img_multiple_of']
-@app.route('/predict/<filename>')   
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+
 def prediction(filepath):
     with torch.no_grad():
-
         # print(file_)
+        
         torch.cuda.ipc_collect()
         torch.cuda.empty_cache()
         img = cv2.cvtColor(cv2.imread(filepath), cv2.COLOR_BGR2RGB)
@@ -80,19 +83,46 @@ def prediction(filepath):
 
         # Unpad the output
         restored = restored[:,:,:h,:w]
-
         restored = restored.permute(0, 2, 3, 1).cpu().detach().numpy()
         restored = img_as_ubyte(restored[0])
         re = cv2.cvtColor(restored, cv2.COLOR_RGB2BGR)
 
         filename = os.path.split(filepath)[-1]
-        cv2.imwrite(os.path.join(out_dir, filename),cv2.cvtColor(restored, cv2.COLOR_RGB2BGR))
-        return jsonify({'filename': filename})
+        cv2.imwrite(os.path.join(out_dir, 'prediction.jpg'),cv2.cvtColor(restored, cv2.COLOR_RGB2BGR))
+        cv2.imwrite(os.path.join(out_dir, 'original_.jpg'), cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+        # return jsonify({'filename': filename, 'output': os.path.join(out_dir, filename) , 'input': filepath, img : re})
+        return render_template('index.html')
+
+@app.route('/prediction', methods=['POST'])
+def prediction_url():
+    # if request.method == 'POST':
+    #   file_ = request.files['image'] 
+    #   file_name = file_.filename 
+    #   file_.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
+    #   file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+  
+    return render_template('index.html')
 
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(out_dir, filename)
+@app.route('/' , methods=['GET', 'POST']) 
+def index():
+    if request.method == 'POST':
+        file_ = request.files['image'] 
+        file_name = file_.filename 
+        file_.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+        prediction(file_path)
+    return render_template('index.html')
+
+
+    
+
+
+
+
+
+
+app.secret_key = 'xxcc3344'
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
