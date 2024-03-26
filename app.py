@@ -32,7 +32,7 @@ parameters = {
     }
 
 config = {  
-    'weights': os.path.join('Enhancement', 'pretrained_models', 'enhancement_lol.pth'),
+    'weights_1': os.path.join('Enhancement', 'pretrained_models', 'enhancement_lol.pth'),
     'architecture': run_path(os.path.join('basicsr', 'models', 'archs', 'mirnet_v2_arch.py')),
     'model_name': 'MIRNet_v2',
     'task': 'lowlight_enhancement',
@@ -49,7 +49,7 @@ config = {
 input_dir = config['input_dir']
 out_dir = config['output_dir']
 os.makedirs(out_dir, exist_ok=True)
-weights = config['weights']
+weights = config['weights_1']
 load_arch = config['architecture']
 model = load_arch['MIRNet_v2'](**parameters)
 model.cuda()
