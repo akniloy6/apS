@@ -93,16 +93,9 @@ def prediction(filepath):
         # return jsonify({'filename': filename, 'output': os.path.join(out_dir, filename) , 'input': filepath, img : re})
         return render_template('index.html')
 
-@app.route('/prediction', methods=['POST'])
-def prediction_url():
-    # if request.method == 'POST':
-    #   file_ = request.files['image'] 
-    #   file_name = file_.filename 
-    #   file_.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
-    #   file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
-  
-    return render_template('index.html')
-
+@app.route('/landing' )
+def landing():
+    return render_template('landing_page.html')
 
 @app.route('/' , methods=['GET', 'POST']) 
 def index():
