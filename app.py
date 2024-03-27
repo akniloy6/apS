@@ -44,6 +44,18 @@ config = {
 }
 
 
+def get_weights_and_parameters(task, parameters):
+    if task == 'real_denoising':
+        weights = os.path.join('Real_Denoising', 'pretrained_models', 'real_denoising.pth')
+    elif task == 'super_resolution':
+        weights = os.path.join('Super_Resolution', 'pretrained_models', 'sr_x2.pth')
+        parameters['scale'] =  2
+    elif task == 'contrast_enhancement':
+        weights = os.path.join('Enhancement', 'pretrained_models', 'enhancement_fivek.pth')
+    elif task == 'lowlight_enhancement':
+        weights = os.path.join('Enhancement', 'pretrained_models', 'enhancement_lol.pth')
+    return weights, parameters
+weights, parameters = get_weights_and_parameters(task, parameters)
 
 
 input_dir = config['input_dir']
@@ -93,11 +105,11 @@ def prediction(filepath):
         # return jsonify({'filename': filename, 'output': os.path.join(out_dir, filename) , 'input': filepath, img : re})
         return render_template('index.html')
 
-@app.route('/landing' )
+@app.route('/')
 def landing():
     return render_template('landing_page.html')
 
-@app.route('/' , methods=['GET', 'POST']) 
+@app.route('/prediction' , methods=['GET', 'POST']) 
 def index():
     if request.method == 'POST':
         file_ = request.files['image'] 
