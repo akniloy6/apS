@@ -11,7 +11,8 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
 
 
-
+torch.cuda.ipc_collect()
+torch.cuda.empty_cache()
 
 
 
