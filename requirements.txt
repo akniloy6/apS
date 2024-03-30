@@ -3,3 +3,5 @@ opencv-python
 scikit-image
 numpy
 gunicon 
+flask_sqlalchemy
+flask_login
