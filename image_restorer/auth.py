@@ -24,12 +24,13 @@ def login():
             flash('Email does not exist', category='error')
     return render_template('index.html')
 
-@auth.route('/logout')
+@auth.route('/logout', methods=['POST'])
 @login_required
 def logout():
-    logout_user()
-    flash('Logged out successfully', category='success')
-    return redirect(url_for('auth.login'))
+    if current_user.is_authenticated:
+        logout_user()
+        flash('You have been logged out.', 'success')
+    return redirect(url_for('views.index'))
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():

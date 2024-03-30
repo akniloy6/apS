@@ -88,31 +88,8 @@ def prediction(filepath):
         # return jsonify({'filename': filename, 'output': os.path.join(out_dir, filename) , 'input': filepath, img : re})
         return render_template('index.html')
 
-@app.route('/landing' )
-def landing():
-    return render_template('landing_page.html')
 
-@app.route('/' , methods=['GET', 'POST']) 
-def index():
-    return render_template('index.html')
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username == 'admin' and password == 'admin':
-            return redirect('/home')
-        else:
-            flash('Invalid Credentials')
-            return redirect('/login')
-    return render_template('index.html')
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        return redirect('/login')
-    return render_template('index.html')
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':

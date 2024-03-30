@@ -12,7 +12,30 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='magnific-popup/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tooplate-infinite-loop.css') }}">
+    <style>
+        /* Add your CSS styles here */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
 
+        .navbar-nav .nav-link {
+            color: #ffffff;
+            padding: 5px 5px;
+            margin: 0 5px;
+        }
+
+        .navbar-toggler-icon {
+            color: #ffffff;
+        }
+
+        .navbar-toggler {
+            padding: 10px 15px;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
   </head>
   <body>    
     <!-- Hero section -->
@@ -29,8 +52,11 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                  <a class="nav-link tm-nav-link" href="/">Low Light Enhancer </a>
+             <li class="nav-item">
+                <form action="/auth" method="POST">
+                    <input type="hidden" name="action" value="signup">
+                    <button type="submit" class="nav-link tm-nav-link" style="border: none; background: none; cursor: pointer;">Low Light Enhancer</button>
+                </form>
               </li>
               <li class="nav-item">
                   <a class="nav-link tm-nav-link" href="#whatwedo">What apS Enhancer does</a>
@@ -143,7 +169,7 @@
                     <img class="card-img-top" src="static/img/Amzad2.jpg" alt="Card image cap">
                     <div class="card-body">
                       <h5 class="card-title">Amzad Hossain Rafi </h5>
-                      <p class="card-text">Machine Learning Engineer.</p>
+                      <p class="card-text">Machine Learning Engineer</p>
                     </div>
                     <div class="card-footer">
                       
@@ -153,7 +179,7 @@
                     <img class="card-img-top" src="static/img/Niloy.jpeg" alt="Card image cap">
                     <div class="card-body">
                       <h5 class="card-title">AK Niloy</h5>
-                      <p class="card-text ">Machine Learning Engineer.</p>
+                      <p class="card-text ">Machine Learning Engineer</p>
                     </div>
                     <div class="card-footer">
                       
@@ -162,8 +188,8 @@
                   <div class="card bg-primary">
                     <img class="card-img-top" src="static/img/Ananno.jpeg" alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title">Ananno</h5>
-                      <p class="card-text ">Machine Learning Engineer .</p>
+                      <h5 class="card-title">Ananno Asif</h5>
+                      <p class="card-text ">Machine Learning Engineer</p>
                     </div>
                     <div class="card-footer">
                       
@@ -172,8 +198,8 @@
                   <div class="card bg-primary">
                     <img class="card-img-top" src="static/img/Sanjib.jpeg" alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title">Sanjid </h5>
-                      <p class="card-text">Python developer .</p>
+                      <h5 class="card-title">Sanjib Paul</h5>
+                      <p class="card-text">Software Engineer</p>
                     </div>
                     <div class="card-footer">
                       
