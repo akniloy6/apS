@@ -1,22 +1,16 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, session
-from flask_login import login_required, current_user
+import os
 from . import db
 from .model import Image, User
-import os
+from .restorer import prediction
+from werkzeug.utils import secure_filename
+from flask_login import login_required, current_user
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 
 views = Blueprint('views', __name__)
 
-# @views.route('/home', methods=['GET', 'POST'])
-# @login_required
-# def home():
-#     # if request.method == 'POST':
-#     #     file_ = request.files['image']
-#     #     file_name = file_.filename
-#     #     file_.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
-#     #     file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
-#     #     # Call your prediction function here
-#     #     flash('Photo uploaded successfully', category='success')
-#     return render_template('home.html', current_user=current_user)
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
 
 @views.route('/home', methods=['GET', 'POST'])
 @login_required
@@ -31,27 +25,22 @@ def home():
             if file_.filename == '':
                 flash('No file selected', category='error')
             else:
-                print('File uploaded')
-                selected_option = request.form.get('processing_option')
-                if selected_option:
-                    # Process the image based on the selected option
-                    if selected_option == 'lowLight':
-                        # Process image for low light enhancement
-                        print('Low light enhancement')
-                    elif selected_option == 'improveResolution':
-                        # Process image to improve resolution
-                        print('Improve resolution', selected_option)
-                    elif selected_option == 'denoise':
-                        # Process image to de-noise
-                        print('De-noise')
+                if file_ and allowed_file(file_.filename):
+                    file_name = secure_filename(file_.filename)
+                    file_.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+                    file_.save(file_path)
+                    # Create new image instance and add to database
+                    new_image = Image(name=file_name, uploader=current_user.id, image_path=file_path)
+                    db.session.add(new_image)
+                    db.session.commit()
+                    
+                    restored_image_path = prediction(file_path)
+                # TODO: Send the file to prediction function defined in restorer.py
+                # TODO: Display the actual image and the restored image
 
-                    # Flash message indicating successful upload and processing
-                    flash('Image processed successfully', category='success')
-                else:
-                    flash('No processing option selected', category='error')
-
+                return render_template('home.html', current_user=current_user, image_names=image_names, image_path=file_path, restored_image_path=restored_image_path)
     return render_template('home.html', current_user=current_user, image_names=image_names)
-
 
 @views.route('/auth', methods=['GET', 'POST'])
 def auth():

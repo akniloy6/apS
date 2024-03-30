@@ -8,10 +8,18 @@ class Image(db.Model):
     uploader = db.Column(db.Integer, db.ForeignKey('user.id'))
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     restored_date = db.Column(db.DateTime(timezone=True), default=func.now())
-
+    image_path = db.Column(db.String(200))
+    
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     full_name = db.Column(db.String(200))
     images = db.relationship('Image', backref='user')
+    
+class RestoredImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150))
+    uploader = db.Column(db.Integer, db.ForeignKey('user.id'))
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    restored_image_path = db.Column(db.String(200))
