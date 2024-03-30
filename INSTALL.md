@@ -5,8 +5,8 @@ Follow these intructions
 
 1. Clone our repository
 ```
-git clone https://github.com/swz30/MIRNetv2.git
-cd MIRNetv2
+git clone < repo >
+cd < main dir >
 ```
 
 2. Make conda environment
