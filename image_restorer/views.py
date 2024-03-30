@@ -4,13 +4,13 @@ from .model import Image, User
 from .restorer import prediction
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
-from flask import Blueprint, render_template, request, flash, redirect, url_for, session
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session, current_app
 
 views = Blueprint('views', __name__)
 
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
-
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in 'ALLOWED_EXTENSIONS'
 
 @views.route('/home', methods=['GET', 'POST'])
 @login_required
@@ -22,24 +22,28 @@ def home():
             flash('No file uploaded', category='error')
         else:
             file_ = request.files['image']
+            print('File:', file_.filename)
             if file_.filename == '':
                 flash('No file selected', category='error')
-            else:
-                if file_ and allowed_file(file_.filename):
+            elif file_ and file_.filename != '':
+                    print('File is allowed')
                     file_name = secure_filename(file_.filename)
-                    file_.save(os.path.join(app.config['UPLOAD_FOLDER'], file_name))
-                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+                    print('Secured filename:', file_name)
+                    file_path = os.path.join('static', 'images', 'uploads', file_name)
                     file_.save(file_path)
+                    print('File path:', file_path)
                     # Create new image instance and add to database
                     new_image = Image(name=file_name, uploader=current_user.id, image_path=file_path)
                     db.session.add(new_image)
                     db.session.commit()
                     
                     restored_image_path = prediction(file_path)
+                    print(restored_image_path)
                 # TODO: Send the file to prediction function defined in restorer.py
                 # TODO: Display the actual image and the restored image
-
-                return render_template('home.html', current_user=current_user, image_names=image_names, image_path=file_path, restored_image_path=restored_image_path)
+                    return render_template('home.html', current_user=current_user, image_names=image_names, actual_image=file_path, restored_image=restored_image_path)
+            else:
+                flash('File type not allowed', category='error')
     return render_template('home.html', current_user=current_user, image_names=image_names)
 
 @views.route('/auth', methods=['GET', 'POST'])

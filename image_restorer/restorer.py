@@ -7,7 +7,6 @@ import torch.nn.functional as F
 from skimage import img_as_ubyte
 from flask import Flask, send_from_directory, jsonify,request,flash,redirect,render_template
 
-
 task = 'lowlight_enhancement'
 parameters = {
     'inp_channels':3,
@@ -29,7 +28,7 @@ config = {
     'model_name': 'MIRNet_v2',
     'task': 'lowlight_enhancement',
     'input_dir': 'demo/sample_images/'+task+'/degraded',
-    'output_dir': 'static/images',
+    'output_dir': 'static/images/restored',
     'img_multiple_of': 4,
 
 
@@ -72,12 +71,18 @@ def prediction(filepath):
         restored = restored[:,:,:h,:w]
         restored = restored.permute(0, 2, 3, 1).cpu().detach().numpy()
         restored = img_as_ubyte(restored[0])
-        re = cv2.cvtColor(restored, cv2.COLOR_RGB2BGR)
-
+        restored_image = cv2.cvtColor(restored, cv2.COLOR_RGB2BGR)
         filename = os.path.split(filepath)[-1]
-        cv2.imwrite(os.path.join(out_dir, 'prediction.jpg'),cv2.cvtColor(restored, cv2.COLOR_RGB2BGR))
-        cv2.imwrite(os.path.join(out_dir, 'original_.jpg'), cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
-        # return jsonify({'filename': filename, 'output': os.path.join(out_dir, filename) , 'input': filepath, img : re})
-        # return render_template('index.html')
-        print('Prediction Done')
+        restored_image_name = 'restored_'+filename
+        restored_image_path = os.path.join(out_dir, restored_image_name)
+        cv2.imwrite(restored_image_path, restored_image)
+        return restored_image_path        
+        
+        # restored_image_path = os.path.join(out_dir, restored_image_name)
+        # filename = os.path.split(filepath)[-1]
+        # cv2.imwrite(os.path.join(out_dir, 'prediction.jpg'),cv2.cvtColor(restored, cv2.COLOR_RGB2BGR))
+        # cv2.imwrite(os.path.join(out_dir, 'original_.jpg'), cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+        # # return jsonify({'filename': filename, 'output': os.path.join(out_dir, filename) , 'input': filepath, img : re})
+        # # return render_template('index.html')
+        # print('Prediction Done')
 

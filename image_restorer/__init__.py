@@ -6,8 +6,9 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 DB_NAME = "image_restorer.db"
 
+app = Flask(__name__)
+
 def create_app():
-    app = Flask(__name__)
     app.config['SECRET_KEY'] = 'xxcc3344'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -39,5 +40,4 @@ def create_database(app):
     if not os.path.exists('db/' + DB_NAME):
         db.create_all(app=app)
         print('Created Database!')
-    
     
