@@ -91,9 +91,8 @@
                 </div>
             </form>
             {% if actual_image and restored_image %}
-                <h2 class="text-center mt-5">{{actual_image}}</h2>
-                <h2 class="text-center mt-5">{{restored_image}}</h2>
-            {% endif %}
+                
+            
             <!-- Display actual image and restored image placeholders -->
             <div class="container mt-5">
                 <div class="row">
@@ -101,7 +100,8 @@
                         <h2 class="text-center">Actual Image</h2>
                         <div id="actualImagePlaceholder" class="text-center">
                             <!-- <p>Loading...</p> -->
-                            <img src="{{ actual_image }}" class="img-fluid" alt="Image">
+                            <!-- <img src="{{ url_for('uploaded_file', filename=actual_image) }}" class="img-fluid" alt="Image" loading="lazy"> -->
+                            <img src="/image_restorer/static/images/uploads/images.jpg" class="img-fluid" alt="Image" loading="lazy">
                         </div>
                         <div id="actualImageDownloadBtn" class="text-center mt-3">
                             <p>Loading...</p>
@@ -111,7 +111,7 @@
                         <h2 class="text-center">Restored Image</h2>
                         <div id="restoredImagePlaceholder" class="text-center">
                             <!-- <p>Loading...</p> -->
-                            <img src="{{ restored_image }}" class="img-fluid" alt="Image">
+                            <img src="{{ url_for('restored_file', filename=restored_image) }}" class="img-fluid" alt="Image" loading="lazy">
                         </div>
                         <div id="restoredImageDownloadBtn" class="text-center mt-3">
                             <p>Loading...</p>
@@ -119,9 +119,10 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
         <div class="col-md-4">
-            <h2 class="text-center">History</h2>
+            <h2 class="text-center">Previously Restored Image History</h2>
             <ul class="list-group">
                 {% for image_name in image_names %}
                     <li class="list-group-item">{{ current_user.full_name }} uploaded {{ image_name }}</li>
@@ -186,36 +187,40 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Function to load the images asynchronously
-    function loadImage(imageUrl, imagePlaceholderId, downloadBtnId) {
-        fetch(imageUrl)
-            .then(response => {
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", async function() {
+        // Function to load the images asynchronously
+        async function loadImage(imageUrl, imagePlaceholderId, downloadBtnId) {
+            console.log('Loading image:', imageUrl)
+            try {
+                const response = await fetch(imageUrl);
                 if (response.ok) {
                     // If image exists, update the image placeholder
-                    document.getElementById(imagePlaceholderId).innerHTML = `<img src="${imageUrl}" class="img-fluid" alt="Image">`;
+                    const imageBlob = await response.blob();
+                    const imageUrlObject = URL.createObjectURL(imageBlob);
+                    document.getElementById(imagePlaceholderId).innerHTML = `<img src="${imageUrlObject}" class="img-fluid" alt="Image">`;
                     // Enable the download button
                     document.getElementById(downloadBtnId).innerHTML = `<a href="${imageUrl}" download="image.jpg" class="btn btn-primary">Download Image</a>`;
                 } else {
                     // If image does not exist, display an error message
                     document.getElementById(imagePlaceholderId).innerHTML = "<p>Error: Image not found</p>";
                 }
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error("Error fetching image:", error);
                 // Display an error message if there's an error fetching the image
                 document.getElementById(imagePlaceholderId).innerHTML = "<p>Error loading image</p>";
-            });
-    }
+            }
+        }
 
-    // Load the actual image asynchronously
-    loadImage("{{ actual_image }}", "actualImagePlaceholder", "actualImageDownloadBtn");
+        // Load the actual image asynchronously
+        await loadImage("{{ actual_image }}", "actualImagePlaceholder", "actualImageDownloadBtn");
 
-    // Load the restored image asynchronously
-    loadImage("{{ restored_image }}", "restoredImagePlaceholder", "restoredImageDownloadBtn");
-});
-</script>
+        // Load the restored image asynchronously
+        await loadImage("{{ restored_image }}", "restoredImagePlaceholder", "restoredImageDownloadBtn");
+    });
+</script> -->
+
+
 </body>
 
 </html>

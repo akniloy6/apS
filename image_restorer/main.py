@@ -7,7 +7,7 @@ import cv2
 import torch.nn.functional as F
 import urllib.request
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads'
+# app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
 
 task = 'lowlight_enhancement'

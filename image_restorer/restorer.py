@@ -72,11 +72,13 @@ def prediction(filepath):
         restored = restored.permute(0, 2, 3, 1).cpu().detach().numpy()
         restored = img_as_ubyte(restored[0])
         restored_image = cv2.cvtColor(restored, cv2.COLOR_RGB2BGR)
-        filename = os.path.split(filepath)[-1]
-        restored_image_name = 'restored_'+filename
-        restored_image_path = os.path.join(out_dir, restored_image_name)
-        cv2.imwrite(restored_image_path, restored_image)
-        return restored_image_path        
+        return restored_image
+    
+        # filename = os.path.split(filepath)[-1]
+        # restored_image_name = 'restored_'+filename
+        # restored_image_path = os.path.join(out_dir, restored_image_name)
+        # cv2.imwrite(restored_image_path, restored_image)
+        # return restored_image_name      
         
         # restored_image_path = os.path.join(out_dir, restored_image_name)
         # filename = os.path.split(filepath)[-1]

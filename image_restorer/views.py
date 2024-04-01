@@ -1,5 +1,6 @@
 import os
 from . import db
+import cv2
 from .model import Image, User
 from .restorer import prediction
 from werkzeug.utils import secure_filename
@@ -24,24 +25,26 @@ def home():
             file_ = request.files['image']
             print('File:', file_.filename)
             if file_.filename == '':
-                flash('No file selected', category='error')
+                flash('No file selected', category='error')         
             elif file_ and file_.filename != '':
-                    print('File is allowed')
                     file_name = secure_filename(file_.filename)
-                    print('Secured filename:', file_name)
-                    file_path = os.path.join('static', 'images', 'uploads', file_name)
+                    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], file_name)
                     file_.save(file_path)
-                    print('File path:', file_path)
-                    # Create new image instance and add to database
-                    new_image = Image(name=file_name, uploader=current_user.id, image_path=file_path)
+                    restored_image = prediction(file_path)
+                    restored_filename = 'restored_' + file_name
+                    restored_image_path = os.path.join(current_app.config['OUTPUT_FOLDER'], restored_filename)
+                    cv2.imwrite(restored_image_path, restored_image)
+                    
+                # # TODO: Send the file to prediction function defined in restorer.py
+                #     restored_image_name = prediction(file_path)
+                #     actual_image_url = url_for('static', filename='images/uploads/' + file_name)
+                #     restored_image_url = url_for('static', filename='images/restored/' + restored_image_name)
+                #     # Create new image instance and add to database
+                    new_image = Image(name=file_name, uploader=current_user.id, image_path=file_path, restored_image_path=restored_image_path)
                     db.session.add(new_image)
                     db.session.commit()
-                    
-                    restored_image_path = prediction(file_path)
-                    print(restored_image_path)
-                # TODO: Send the file to prediction function defined in restorer.py
-                # TODO: Display the actual image and the restored image
-                    return render_template('home.html', current_user=current_user, image_names=image_names, actual_image=file_path, restored_image=restored_image_path)
+                # # TODO: Display the actual image and the restored image
+                    return render_template('home.html', current_user=current_user, image_names=image_names, actual_image=file_name, restored_image=restored_filename)
             else:
                 flash('File type not allowed', category='error')
     return render_template('home.html', current_user=current_user, image_names=image_names)
@@ -58,3 +61,4 @@ def auth():
 @views.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('landing_page.html')
+

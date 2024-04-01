@@ -1,17 +1,19 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
+from flask import Flask, send_from_directory
 import os
 from flask_login import LoginManager
 
 db = SQLAlchemy()
 DB_NAME = "image_restorer.db"
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='/image_restorer/static', static_url_path='/image_restorer/static')
 
 def create_app():
     app.config['SECRET_KEY'] = 'xxcc3344'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-    app.config['UPLOAD_FOLDER'] = 'uploads'
+    app.config['UPLOAD_FOLDER'] = '/image_restorer/static/images/uploads/'
+    app.config['OUTPUT_FOLDER'] = '/image_restorer/static/images/restored/'
+
     app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
     
     db.init_app(app)
@@ -40,4 +42,12 @@ def create_database(app):
     if not os.path.exists('db/' + DB_NAME):
         db.create_all(app=app)
         print('Created Database!')
-    
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/restored/<filename>')
+def restored_file(filename):
+    return send_from_directory(app.config['OUTPUT_FOLDER'], filename)
