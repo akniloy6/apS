@@ -67,7 +67,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <h1 class="text-center">Image Uploader</h1>
             <p class="text-center">Upload an image to enhance the low-light part in your image </p>
             <form method="POST" enctype="multipart/form-data">
@@ -100,8 +100,7 @@
                         <h2 class="text-center">Actual Image</h2>
                         <div id="actualImagePlaceholder" class="text-center">
                             <!-- <p>Loading...</p> -->
-                            <!-- <img src="{{ url_for('uploaded_file', filename=actual_image) }}" class="img-fluid" alt="Image" loading="lazy"> -->
-                            <img src="/image_restorer/static/images/uploads/images.jpg" class="img-fluid" alt="Image" loading="lazy">
+                            <img src="{{ url_for('uploaded_file', filename=actual_image) }}" class="img-fluid" alt="Image" loading="lazy">
                         </div>
                         <div id="actualImageDownloadBtn" class="text-center mt-3">
                             <p>Loading...</p>
@@ -121,7 +120,7 @@
             </div>
             {% endif %}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <h2 class="text-center">Previously Restored Image History</h2>
             <ul class="list-group">
                 {% for image_name in image_names %}

@@ -6,13 +6,13 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 DB_NAME = "image_restorer.db"
 
-app = Flask(__name__, static_folder='/image_restorer/static', static_url_path='/image_restorer/static')
+app = Flask(__name__, static_folder='../static/', static_url_path='/static/')
 
 def create_app():
     app.config['SECRET_KEY'] = 'xxcc3344'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-    app.config['UPLOAD_FOLDER'] = '/image_restorer/static/images/uploads/'
-    app.config['OUTPUT_FOLDER'] = '/image_restorer/static/images/restored/'
+    app.config['UPLOAD_FOLDER'] = 'static/uploads/'
+    app.config['OUTPUT_FOLDER'] = 'static/restored/'
 
     app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
     
@@ -46,8 +46,8 @@ def create_database(app):
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    return send_from_directory('../static/uploads/', filename)
 
 @app.route('/restored/<filename>')
 def restored_file(filename):
-    return send_from_directory(app.config['OUTPUT_FOLDER'], filename)
+    return send_from_directory('../static/restored/', filename)
