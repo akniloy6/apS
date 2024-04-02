@@ -1,7 +1,6 @@
 import os
 import torch
 import cv2
-import urllib.request
 from runpy import run_path
 import torch.nn.functional as F
 from skimage import img_as_ubyte
@@ -14,7 +13,7 @@ from flask import (
     redirect,
     render_template,
 )
-
+Device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 task = "lowlight_enhancement"
 parameters = {
     "inp_channels": 3,

@@ -1,10 +1,4 @@
-## Learning Enriched Features for Fast Image Restoration and Enhancement
-## Syed Waqas Zamir, Aditya Arora, Salman Khan, Munawar Hayat, Fahad Shahbaz Khan, Ming-Hsuan Yang, and Ling Shao
-## IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)
-## https://www.waqaszamir.com/publication/zamir-2022-mirnetv2/
 
-
-## Download training and testing data for image enhancement task
 import os
 
 # import gdown
