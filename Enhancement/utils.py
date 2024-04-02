@@ -8,26 +8,27 @@ import os
 import cv2
 import math
 
+
 def calculate_psnr(img1, img2, border=0):
     # img1 and img2 have range [0, 255]
-    #img1 = img1.squeeze()
-    #img2 = img2.squeeze()
+    # img1 = img1.squeeze()
+    # img2 = img2.squeeze()
     if not img1.shape == img2.shape:
-        raise ValueError('Input images must have the same dimensions.')
+        raise ValueError("Input images must have the same dimensions.")
     h, w = img1.shape[:2]
-    img1 = img1[border:h-border, border:w-border]
-    img2 = img2[border:h-border, border:w-border]
+    img1 = img1[border : h - border, border : w - border]
+    img2 = img2[border : h - border, border : w - border]
 
     img1 = img1.astype(np.float64)
     img2 = img2.astype(np.float64)
-    mse = np.mean((img1 - img2)**2)
+    mse = np.mean((img1 - img2) ** 2)
     if mse == 0:
-        return float('inf')
+        return float("inf")
     return 20 * math.log10(255.0 / math.sqrt(mse))
 
 
 def PSNR(img1, img2):
-    mse_ = np.mean( (img1 - img2) ** 2 )
+    mse_ = np.mean((img1 - img2) ** 2)
     if mse_ == 0:
         return 100
     return 10 * math.log10(1 / mse_)
@@ -37,17 +38,17 @@ def PSNR(img1, img2):
 # SSIM
 # --------------------------------------------
 def calculate_ssim(img1, img2, border=0):
-    '''calculate SSIM
+    """calculate SSIM
     the same outputs as MATLAB's
     img1, img2: [0, 255]
-    '''
-    #img1 = img1.squeeze()
-    #img2 = img2.squeeze()
+    """
+    # img1 = img1.squeeze()
+    # img2 = img2.squeeze()
     if not img1.shape == img2.shape:
-        raise ValueError('Input images must have the same dimensions.')
+        raise ValueError("Input images must have the same dimensions.")
     h, w = img1.shape[:2]
-    img1 = img1[border:h-border, border:w-border]
-    img2 = img2[border:h-border, border:w-border]
+    img1 = img1[border : h - border, border : w - border]
+    img2 = img2[border : h - border, border : w - border]
 
     if img1.ndim == 2:
         return ssim(img1, img2)
@@ -55,17 +56,17 @@ def calculate_ssim(img1, img2, border=0):
         if img1.shape[2] == 3:
             ssims = []
             for i in range(3):
-                ssims.append(ssim(img1[:,:,i], img2[:,:,i]))
+                ssims.append(ssim(img1[:, :, i], img2[:, :, i]))
             return np.array(ssims).mean()
         elif img1.shape[2] == 1:
             return ssim(np.squeeze(img1), np.squeeze(img2))
     else:
-        raise ValueError('Wrong input image dimensions.')
+        raise ValueError("Wrong input image dimensions.")
 
 
 def ssim(img1, img2):
-    C1 = (0.01 * 255)**2
-    C2 = (0.03 * 255)**2
+    C1 = (0.01 * 255) ** 2
+    C2 = (0.03 * 255) ** 2
 
     img1 = img1.astype(np.float64)
     img2 = img2.astype(np.float64)
@@ -81,18 +82,23 @@ def ssim(img1, img2):
     sigma2_sq = cv2.filter2D(img2**2, -1, window)[5:-5, 5:-5] - mu2_sq
     sigma12 = cv2.filter2D(img1 * img2, -1, window)[5:-5, 5:-5] - mu1_mu2
 
-    ssim_map = ((2 * mu1_mu2 + C1) * (2 * sigma12 + C2)) / ((mu1_sq + mu2_sq + C1) *
-                                                            (sigma1_sq + sigma2_sq + C2))
+    ssim_map = ((2 * mu1_mu2 + C1) * (2 * sigma12 + C2)) / (
+        (mu1_sq + mu2_sq + C1) * (sigma1_sq + sigma2_sq + C2)
+    )
     return ssim_map.mean()
+
 
 def load_img(filepath):
     return cv2.cvtColor(cv2.imread(filepath), cv2.COLOR_BGR2RGB)
 
+
 def save_img(filepath, img):
-    cv2.imwrite(filepath,cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+    cv2.imwrite(filepath, cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+
 
 def load_gray_img(filepath):
     return np.expand_dims(cv2.imread(filepath, cv2.IMREAD_GRAYSCALE), axis=2)
+
 
 def save_gray_img(filepath, img):
     cv2.imwrite(filepath, img)
