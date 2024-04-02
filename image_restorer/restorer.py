@@ -105,3 +105,5 @@ def prediction(filepath):
         restored = img_as_ubyte(restored[0])
         restored_image = cv2.cvtColor(restored, cv2.COLOR_RGB2BGR)
         return restored_image
+
+

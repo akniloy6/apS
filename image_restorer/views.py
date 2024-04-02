@@ -13,7 +13,7 @@ from flask import (
     redirect,
     url_for,
     session,
-    current_app,
+    current_app, jsonify
 )
 
 views = Blueprint("views", __name__)
@@ -92,3 +92,22 @@ def auth():
 @views.route("/", methods=["GET", "POST"])
 def index():
     return render_template("landing_page.html")
+
+@views.route('/api/restore_image', methods=['POST'])
+def restore_image():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file uploaded'})
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'})
+
+    # Save the uploaded file
+    file_path = os.path.join(input_dir, file.filename)
+    file.save(file_path)
+
+    # Perform image restoration
+    restored_image = prediction(file_path)
+
+    # Return the restored image as JSON
+    return jsonify({'restored_image': restored_image.tolist()})

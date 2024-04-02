@@ -102,9 +102,7 @@
                             <!-- <p>Loading...</p> -->
                             <img src="{{ url_for('uploaded_file', filename=actual_image) }}" class="img-fluid" alt="Image" loading="lazy">
                         </div>
-                        <div id="actualImageDownloadBtn" class="text-center mt-3">
-                            <p>Loading...</p>
-                        </div>
+                        
                     </div>
                     <div class="col-md-6">
                         <h2 class="text-center">Restored Image</h2>
@@ -113,8 +111,11 @@
                             <img src="{{ url_for('restored_file', filename=restored_image) }}" class="img-fluid" alt="Image" loading="lazy">
                         </div>
                         <div id="restoredImageDownloadBtn" class="text-center mt-3">
-                            <p>Loading...</p>
+                            <a href="{{ url_for('restored_file', filename=restored_image) }}" download>
+                                <button class="btn btn-primary">Download Restored Image</button>
+                            </a>
                         </div>
+                     
                     </div>
                 </div>
             </div>
@@ -138,9 +139,7 @@
             <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
                 <h5 class="text-uppercase">Footer Content</h5>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
-                    aliquam voluptatem veniam, est atque cumque eum delectus sint!
+                a team of developers who are passionate about building web applications and software solutions.
                 </p>
             </div>
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
