@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, url_for, flash
+from flask import Blueprint, request, render_template, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 from . import db
@@ -17,6 +17,7 @@ def login():
             if check_password_hash(user.password, password):
                 flash("Logged in successfully", category="success")
                 login_user(user, remember=True)
+                session["user_id"] = user.id
                 print("User is logged in: ", current_user)
                 return redirect(url_for("views.home"))
             else:
