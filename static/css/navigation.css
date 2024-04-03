@@ -1,0 +1,21 @@
+.navbar {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff;
+    padding: 5px 5px;
+    margin: 0 5px;
+}
+
+.navbar-toggler-icon {
+    color: #ffffff;
+}
+
+.navbar-toggler {
+    padding: 10px 15px;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

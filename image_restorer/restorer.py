@@ -49,7 +49,8 @@ os.makedirs(out_dir, exist_ok=True)
 weights = config["weights_1"]
 load_arch = config["architecture"]
 model = load_arch["MIRNet_v2"](**parameters)
-model.cuda()
+# model.cuda()
+model.to('cpu')
 
 checkpoint = torch.load(weights)
 model.load_state_dict(checkpoint["params"])
@@ -75,8 +76,8 @@ def prediction(filepath):
     with torch.no_grad():
         # print(file_)
 
-        torch.cuda.ipc_collect()
-        torch.cuda.empty_cache()
+        # torch.cuda.ipc_collect()
+        # torch.cuda.empty_cache()
         img = cv2.cvtColor(cv2.imread(filepath), cv2.COLOR_BGR2RGB)
         input_ = (
             torch.from_numpy(img)
@@ -84,7 +85,9 @@ def prediction(filepath):
             .div(255.0)
             .permute(2, 0, 1)
             .unsqueeze(0)
-            .cuda()
+            .cpu()
+            # .cuda()
+            
         )
 
         # Pad the input if not_multiple_of 4

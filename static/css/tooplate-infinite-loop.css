@@ -514,10 +514,10 @@ figure.effect-honey:hover h2 i {
 #contact {
   color: white;
   background-color: #001828;
-  background-image: url(../img/ml.jpg);
+  background-image: url(../img/footer-bg.png);
   background-position: center;
-  background-repeat: no-repeat;
-  min-height: 680px;
+  background-repeat: repeat-x;
+  /* min-height: 680px; */
   position: center;
   padding-bottom: 50px;
   padding-top: 20px;

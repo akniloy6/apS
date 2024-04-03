@@ -12,37 +12,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='magnific-popup/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tooplate-infinite-loop.css') }}">
-    <style>
-        /* Add your CSS styles here */
-        .navbar {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        .navbar-nav .nav-link {
-            color: #ffffff;
-            padding: 5px 5px;
-            margin: 0 5px;
-        }
-
-        .navbar-toggler-icon {
-            color: #ffffff;
-        }
-
-        .navbar-toggler {
-            padding: 10px 15px;
-        }
-
-        .navbar {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}">
   </head>
+
   <body>    
     <!-- Hero section -->
-    <section id="infinite" class="text-white tm-font-big tm-parallax">
+  <section id="infinite" class="text-white tm-font-big tm-parallax">
       <!-- Navigation -->
       <nav class="navbar navbar-expand-md tm-navbar" id="tmNav">              
-        <div class="container">   
+        <div class="container-fluid">   
           <div class="tm-next">
               <a href="#infinite" class="navbar-brand">apS Enhancer</a>
           </div>             
@@ -62,10 +40,10 @@
                   <a class="nav-link tm-nav-link" href="#whatwedo">What apS Enhancer does</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link tm-nav-link" href="#testimonials">Team Members</a>
+                  <a class="nav-link tm-nav-link" href="#gallery">Image Samples</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link tm-nav-link" href="#gallery">Images</a>
+                <a class="nav-link tm-nav-link" href="#testimonials">Team Members</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link tm-nav-link" href="#contact">Contact</a>
@@ -89,12 +67,10 @@
           <i class="fas fa-2x fa-arrow-down tm-down-arrow"></i>
         </a>
       </div>      
-    </section>
+  </section>
 
-    <section id="whatwedo" class="tm-section-pad-top">
-      
+  <section id="whatwedo" class="tm-section-pad-top">
       <div class="container">
-
             <div class="row tm-content-box"><!-- first row -->
                 <div class="col-lg-12 col-xl-12">
                     <div class="tm-intro-text-container">
@@ -103,76 +79,131 @@
                           apS Enhancer is a low light image enhancer that takes low light images from low end devices and enhances the images. </p>
                     </div>
                 </div>
-
             </div><!-- first row -->
             
             <div class="row tm-content-box"><!-- second row -->
-        		<div class="col-lg-1">
+        		  <div class="col-lg-1">
                     <i class="far fa-3x fa-chart-bar text-center tm-icon"></i>
-                </div>
-                <div class="col-lg-5">
+              </div>
+              <div class="col-lg-5">
                     <div class="tm-intro-text-container">
                         <h2 class="tm-text-primary mb-4">Low-Light Enhancement</h2>
                         <p class="mb-4 tm-intro-text">
                           Takes low light images from low end devices, specially the night time, and enhances the images to be more visible and bright.</p>
                     </div>
-                </div>
-                
-                <div class="col-lg-1">
+              </div>
+              <div class="col-lg-1">
                     <i class="far fa-3x fa-comment-alt text-center tm-icon"></i>
-                </div>
-                <div class="col-lg-5">
-                    <div class="tm-intro-text-container">
-                        <h2 class="tm-text-primary mb-4">Image Restoration</h2>
-                        <p class="mb-4 tm-intro-text">
-                          Takes low quality images and restores them to contain more details in the image.</p>
-                    </div>
-                </div>
-
+              </div>
+              <div class="col-lg-5">
+                  <div class="tm-intro-text-container">
+                      <h2 class="tm-text-primary mb-4">Image Restoration</h2>
+                      <p class="mb-4 tm-intro-text">
+                        Takes low quality images and restores them to contain more details in the image.
+                      </p>
+                  </div>
+              </div>
             </div><!-- second row -->
             
             <div class="row tm-content-box"><!-- third row -->
-        		<div class="col-lg-1">
+        		  <div class="col-lg-1">
                     <i class="fas fa-3x fa-fingerprint text-center tm-icon"></i>
-                </div>
-                <div class="col-lg-5">
-                    <div class="tm-intro-text-container">
-                        <h2 class="tm-text-primary mb-4">Denoising</h2>
-                        <p class="mb-4 tm-intro-text">
-                      </p>
+              </div>
+              <div class="col-lg-5">
+                <div class="tm-intro-text-container">
+                    <h2 class="tm-text-primary mb-4">Denoising</h2>
+                    <p class="mb-4 tm-intro-text">
                       Removes unwanted noise from images, improving clarity and sharpness. Ideal for reducing graininess in photos taken in low light or high ISO settings, resulting in cleaner and more polished visuals.
-                        </div>
-                    </div>
+                    </p>
                 </div>
-                
-    </section>
+              </div>
+            </div>
+      </div>
+  </section>
     
+        <section id="gallery" class="tm-section-pad-top">
+      <div class="container tm-container-gallery">
+        <div class="row">
+          <div class="text-center col-12">
+              <h2 class="tm-text-primary tm-section-title mb-4">Low Light Image Restoration Example </h2>
+              <p class="mx-auto tm-section-desc">
+                
+              </p>
+          </div>            
+        </div>
+
+        <div class="row">
+            <div class="cal-3 p-1">
+              <img src="static/img/Dark-Images_0_c6796f5ba1ee2b245386.png" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
+            </div>
+
+            <div class="cal-3 p-1">
+              <img src="static/img/prediction (4).jpg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
+            </div>
+
+            <div class="cal-3 p-1">
+              <img src="static/img/Low-light-1.jpeg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
+            </div>
+
+            <div class="cal-3 p-1">
+              <img src="static/img/Enhanced-Image-1.jpeg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
+            </div>
+        </div>
+
+
+      <div class="row">
+        <div class="cal-3 p-1">
+                <img src="static/img/Low-light-2.jpeg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
+        </div>
+
+        <div class="cal-3 p-1">
+                <img src="static/img/Enhanced-Image-2.jpeg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
+        </div>
+              <div cal-3 p-1>
+              <img src="static/img/Low-light-3.png" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
+        </div>
+
+        <div class="cal-3 p-1 ">
+              <img src="static/img/Enhanced-Image-3.jpg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="cal-3 p-1">
+            <img src="static/img/5.webp" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
+          </div>
+          <div class="cal-3 p-1">
+            <img src="static/img/5pred.jpg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
+          </div>
+          <div cal-3 p-1>
+            <img src="static/img/Low-light-4.png" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
+          </div>
+          <div class="cal-3 p-1 ">
+                <img src="static/img/Enhanced-Image-4.jpg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
+          </div>
+      </div>
+      
+    </section>
+
     <section id="testimonials" class="tm-section-pad-top tm-parallax-2">      
       <div class="container tm-testimonials-content">
         <div class="row">
           <div class="col-lg-12 tm-content-box">
             <h2 class="text-white text-center mb-4 tm-section-title">Team Members</h2>
-            <p class="mx-auto tm-section-desc text-center">
-                
-              </p>
 
             <div class=" mx-auto tm-gallery-container tm-gallery-container-2">
               <div class="tm-testimonials-carousel">
                 <div class="text-center mx-auto tm-gallery-item">
-                  <figure class="effect-ming tm-gallery-item-overlay">
-                   
-                  </figure>
-              
-                  <p class="tm-user">
+                  <!-- <p class="tm-user"> -->
                 <div class="card-deck">
                   <div class="card bg-primary">
                     <img class="card-img-top" src="static/img/Amzad2.jpg" alt="Card image cap">
                     <div class="card-body">
                       <h5 class="card-title">Amzad Hossain Rafi </h5>
                       <p class="card-text">Machine Learning Engineer</p>
+                      <!-- </p> -->
                     </div>
                     <div class="card-footer">
-                      
                     </div>
                   </div>
                   <div class="card bg-primary">
@@ -214,84 +245,6 @@
       <div class="tm-bg-overlay"></div>
     </section>
     
-    <section id="gallery" class="tm-section-pad-top">
-      <div class="container tm-container-gallery">
-        <div class="row">
-          <div class="text-center col-12">
-              <h2 class="tm-text-primary tm-section-title mb-4">Low Light Image Restoration Example </h2>
-              <p class="mx-auto tm-section-desc">
-                
-              </p>
-          </div>            
-        </div>
-        
-
-        <div class="row">
-            <div class="cal-3 p-1">
-              <img src="static/img/Dark-Images_0_c6796f5ba1ee2b245386.png" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
-            </div>
-
-            <div class="cal-3 p-1">
-              <img src="static/img/prediction (4).jpg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
-            </div>
-
-            <div class="cal-3 p-1">
-              <img src="static/img/Low-light-1.jpeg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
-            </div>
-
-            <div class="cal-3 p-1">
-              <img src="static/img/Enhanced-Image-1.jpeg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
-            </div>
-
-        </div>
-
-
-      <div class="row">
-
-
-      <div class="cal-3 p-1">
-              <img src="static/img/Low-light-2.jpeg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
-      </div>
-
-      <div class="cal-3 p-1">
-              <img src="static/img/Enhanced-Image-2.jpeg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
-      </div>
-            <div cal-3 p-1>
-            <img src="static/img/Low-light-3.png" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
-      </div>
-
-      <div class="cal-3 p-1 ">
-            <img src="static/img/Enhanced-Image-3.jpg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
-      </div>
-          
-          
-
-
-</div>
-
-        <div class="row">
-
-          <div class="cal-3 p-1">
-            <img src="static/img/5.webp" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
-    </div>
-
-    <div class="cal-3 p-1">
-            <img src="static/img/5pred.jpg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
-    </div>
-          <div cal-3 p-1>
-          <img src="static/img/Low-light-4.png" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
-    </div>
-
-    <div class="cal-3 p-1 ">
-          <img src="static/img/Enhanced-Image-4.jpg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
-    </div>
-
-
-          
-        </div>
-      
-    </section>
-
     <!-- Contact -->
     <section id="contact" class="tm-section-pad-top tm-parallax-2">
     
@@ -353,7 +306,7 @@
 
       	<footer class="text-center small tm-footer">
           <p class="mb-0">
-          Copyright &copy; Team apS 
+          Copyright &copy; Team apS @2024
         </footer>
 
     </section>
