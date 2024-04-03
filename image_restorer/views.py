@@ -31,7 +31,7 @@ def allowed_file(filename):
 @login_required
 def home():
     user_uploaded_images = Image.query.filter_by(uploader=current_user.id).all()
-    image_names = [image.name for image in user_uploaded_images]
+    image_details = [{'name': image.name, 'date':image.restoration_date }for image in user_uploaded_images]
     if request.method == "POST":
         if "image" not in request.files:
             flash("No file uploaded", category="error")
@@ -68,14 +68,14 @@ def home():
                 return render_template(
                     "home.html",
                     current_user=current_user,
-                    image_names=image_names,
+                    image_details=image_details,
                     actual_image=file_name,
                     restored_image=restored_filename,
                 )
             else:
                 flash("File type not allowed", category="error")
     return render_template(
-        "home.html", current_user=current_user, image_names=image_names
+        "home.html", current_user=current_user, image_details=image_details
     )
 
 
@@ -91,7 +91,11 @@ def auth():
 
 @views.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("landing_page.html")
+    user_id = session.get("user_id")
+    if user_id is None:
+        return render_template("landing_page.html")
+    else:
+        return render_template("landing_page.html", current_user=current_user)
 
 @views.route('/api/restore_image', methods=['POST'])
 def restore_image():

@@ -19,3 +19,11 @@
 .navbar {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.timeline h2 {
+    font-size: 1.5em; /* Adjust as needed */
+}
+.timeline .content p {
+    font-size: 0.9em; /* Adjust as needed */
+    line-height: 1.2; /* Adjust as needed */
+}

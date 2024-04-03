@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Homepage</title>
+    <title>apS Enhancer</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-5.5/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='slick/slick.css') }}">
@@ -31,7 +31,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
              <li class="nav-item">
-                <form action="/auth" method="POST">
+                <form action="/auth" method="POST" id="authForm">
                     <input type="hidden" name="action" value="signup">
                     <button type="submit" class="nav-link tm-nav-link" style="border: none; background: none; cursor: pointer;">Low Light Enhancer</button>
                 </form>
@@ -47,7 +47,20 @@
               </li>
               <li class="nav-item">
                   <a class="nav-link tm-nav-link" href="#contact">Contact</a>
-              </li>                    
+              </li>      
+                  <li class="nav-item">
+                {% if current_user.is_authenticated %}
+                <form action="{{ url_for('auth.logout') }}" method="post">
+                  <button
+                    class="nav-link tm-nav-link"
+                    type="submit"
+                    style="border: none; background: none; cursor: pointer"
+                  >
+                    Logout
+                  </button>
+                </form>
+                {% endif %}
+              </li>              
             </ul>
           </div>        
         </div>
@@ -304,9 +317,10 @@
             
             </div>
 
-      	<footer class="text-center small tm-footer">
+      	<footer class="text-center small tm-footer" style="margin-top: auto;">
           <p class="mb-0">
           Copyright &copy; Team apS @2024
+          </p>
         </footer>
 
     </section>
@@ -501,6 +515,14 @@
         ]
         });
       });
+    </script>
+    <script>
+      window.onload = function () {
+        var is_authenticated = "{{ current_user.is_authenticated }}";
+        if (is_authenticated) {
+          document.getElementById("authForm").action = "/home";
+        }
+      };
     </script>
   </body>
 </html>
