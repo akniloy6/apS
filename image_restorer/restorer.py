@@ -13,8 +13,10 @@ from flask import (
     redirect,
     render_template,
 )
-Device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 task = "lowlight_enhancement"
+
 parameters = {
     "inp_channels": 3,
     "out_channels": 3,
@@ -49,8 +51,7 @@ os.makedirs(out_dir, exist_ok=True)
 weights = config["weights_1"]
 load_arch = config["architecture"]
 model = load_arch["MIRNet_v2"](**parameters)
-model.cuda()
-# model.to('cpu')
+model = model.to(DEVICE)
 
 checkpoint = torch.load(weights)
 model.load_state_dict(checkpoint["params"])
@@ -75,9 +76,10 @@ def prediction(filepath):
     """
     with torch.no_grad():
         # print(file_)
-
-        torch.cuda.ipc_collect()
-        torch.cuda.empty_cache()
+        if DEVICE == "cuda":
+            torch.cuda.ipc_collect()
+            torch.cuda.empty_cache()
+            
         img = cv2.cvtColor(cv2.imread(filepath), cv2.COLOR_BGR2RGB)
         input_ = (
             torch.from_numpy(img)
@@ -85,7 +87,7 @@ def prediction(filepath):
             .div(255.0)
             .permute(2, 0, 1)
             .unsqueeze(0)
-            .cuda()
+            .to(DEVICE)
             
         )
 
