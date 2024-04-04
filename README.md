@@ -33,6 +33,8 @@ Feel free to explore the different features of the web application and experimen
 ![alt text](<static/img/Screenshot 2024-03-30 143832.png>)
 
 after uploading the image, the user can click on the "Enhance Image" button to apply the image restoration algorithm. The enhanced image will be displayed on the screen, and the user can choose to download the enhanced image or upload another image for processing.
+<br>
+<br>
 ![alt text](static/img/dash.png)
 
 
