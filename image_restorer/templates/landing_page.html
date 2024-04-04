@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Homepage</title>
+    <title>apS Enhancer</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-5.5/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='slick/slick.css') }}">
@@ -31,7 +31,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
              <li class="nav-item">
-                <form action="/auth" method="POST">
+                <form action="/auth" method="POST" id="authForm">
                     <input type="hidden" name="action" value="signup">
                     <button type="submit" class="nav-link tm-nav-link" style="border: none; background: none; cursor: pointer;">Low Light Enhancer</button>
                 </form>
@@ -47,7 +47,20 @@
               </li>
               <li class="nav-item">
                   <a class="nav-link tm-nav-link" href="#contact">Contact</a>
-              </li>                    
+              </li>      
+                  <li class="nav-item">
+                {% if current_user.is_authenticated %}
+                <form action="{{ url_for('auth.logout') }}" method="post">
+                  <button
+                    class="nav-link tm-nav-link"
+                    type="submit"
+                    style="border: none; background: none; cursor: pointer"
+                  >
+                    Logout
+                  </button>
+                </form>
+                {% endif %}
+              </li>              
             </ul>
           </div>        
         </div>
@@ -74,28 +87,29 @@
             <div class="row tm-content-box"><!-- first row -->
                 <div class="col-lg-12 col-xl-12">
                     <div class="tm-intro-text-container">
-                        <h2 class="tm-text-primary mb-4 tm-section-title">What apS Enhancer does</h2>
-                        <p class="mb-4 tm-intro-text">
+                        <h2 class="tm-text-primary mb-4 tm-section-title text-center ">What apS Enhancer does</h2>
+                        <p class="mb-4 tm-intro-text text-center ">
                           apS Enhancer is a low light image enhancer that takes low light images from low end devices and enhances the images. </p>
                     </div>
                 </div>
             </div><!-- first row -->
             
             <div class="row tm-content-box"><!-- second row -->
-        		  <div class="col-lg-1">
-                    <i class="far fa-3x fa-chart-bar text-center tm-icon"></i>
+        		  <div class="col-md-7 p-1">
+                   
+                   <img src="static/img/Innovation-amico.svg" alt="">
               </div>
-              <div class="col-lg-5">
+              <div class="col-lg-3 p-1">
                     <div class="tm-intro-text-container">
                         <h2 class="tm-text-primary mb-4">Low-Light Enhancement</h2>
                         <p class="mb-4 tm-intro-text">
                           Takes low light images from low end devices, specially the night time, and enhances the images to be more visible and bright.</p>
                     </div>
               </div>
-              <div class="col-lg-1">
-                    <i class="far fa-3x fa-comment-alt text-center tm-icon"></i>
-              </div>
-              <div class="col-lg-5">
+              <!-- <div class="col-md-7">
+                <img src="static/img/Images-pana.svg" alt="">
+              </div> -->
+              <div class="col-lg-5 p-1">
                   <div class="tm-intro-text-container">
                       <h2 class="tm-text-primary mb-4">Image Restoration</h2>
                       <p class="mb-4 tm-intro-text">
@@ -103,11 +117,14 @@
                       </p>
                   </div>
               </div>
+              <div class="col-md-7 p-1">
+                <img src="static/img/Images-pana.svg" alt="">
+              </div>
             </div><!-- second row -->
             
             <div class="row tm-content-box"><!-- third row -->
-        		  <div class="col-lg-1">
-                    <i class="fas fa-3x fa-fingerprint text-center tm-icon"></i>
+        		  <div class="col-md-7">
+                 <img src="static/img/Images-amico.svg" alt="">
               </div>
               <div class="col-lg-5">
                 <div class="tm-intro-text-container">
@@ -121,7 +138,7 @@
       </div>
   </section>
     
-        <section id="gallery" class="tm-section-pad-top">
+    <section id="gallery" class="tm-section-pad-top">
       <div class="container tm-container-gallery">
         <div class="row">
           <div class="text-center col-12">
@@ -159,7 +176,7 @@
         <div class="cal-3 p-1">
                 <img src="static/img/Enhanced-Image-2.jpeg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
         </div>
-              <div cal-3 p-1>
+        <div class="cal-3 p-1">
               <img src="static/img/Low-light-3.png" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
         </div>
 
@@ -175,11 +192,11 @@
           <div class="cal-3 p-1">
             <img src="static/img/5pred.jpg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
           </div>
-          <div cal-3 p-1>
-            <img src="static/img/Low-light-4.png" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px" />
+          <div class="cal-3 p-1">
+            <img src="static/img/Low-light-4.png" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
           </div>
-          <div class="cal-3 p-1 ">
-                <img src="static/img/Enhanced-Image-4.jpg" alt="Image" class="img-fluid tm-gallery-img" height="300px" width="300px"/>
+          <div class="cal-3 p-1">
+                <img src="static/img/Enhanced-Image-4.jpg" alt="Image" class="img-fluid tm-gallery-img" height="280px" width="300px"/>
           </div>
       </div>
       
@@ -304,9 +321,10 @@
             
             </div>
 
-      	<footer class="text-center small tm-footer">
+      	<footer class="text-center small tm-footer" style="margin-top: auto;">
           <p class="mb-0">
           Copyright &copy; Team apS @2024
+          </p>
         </footer>
 
     </section>
@@ -501,6 +519,14 @@
         ]
         });
       });
+    </script>
+    <script>
+      window.onload = function () {
+        var is_authenticated = "{{ current_user.is_authenticated }}";
+        if (is_authenticated) {
+          document.getElementById("authForm").action = "/home";
+        }
+      };
     </script>
   </body>
 </html>
