@@ -21,9 +21,5 @@ scikit-image==0.22.0
 scipy==1.12.0
 SQLAlchemy==2.0.29
 sympy==1.12
-# tifffile==2024.2.12
-# torch==2.2.2+cpu
-# torchaudio==2.2.2+cpu
-# torchvision==0.17.2+cpu
 typing_extensions==4.8.0
 Werkzeug==3.0.1
